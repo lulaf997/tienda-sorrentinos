@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #ede6d6;
+  --paper-light: #f7f3e9;
+  --ink: #23281e;
+  --awning: #2f5233;
+  --awning-dark: #23402a;
+  --stamp: #b23a2e;
+  --stamp-dark: #8f2d23;
+  --mustard: #c99a2e;
+  --line: #c9bfa5;
+
+  --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--mustard);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid var(--awning);
+  outline-offset: 2px;
+}
+
+.awning-stripes {
+  background-image: repeating-linear-gradient(115deg,
+      var(--awning) 0px,
+      var(--awning) 22px,
+      var(--paper-light) 22px,
+      var(--paper-light) 44px);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.paper-card {
+  background: var(--paper-light);
+  border: 1px solid var(--line);
+  box-shadow: 3px 3px 0 var(--line);
+}
+
+.stamp-btn {
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.stamp-btn:active {
+  transform: scale(0.94) rotate(-1deg);
+}
+
+.receipt-edge {
+  background-image: radial-gradient(circle at 8px 8px,
+      var(--ink) 0 3px,
+      transparent 3px);
+  background-size: 16px 16px;
+  background-repeat: repeat-x;
+  background-position: top left;
+  background-color: var(--paper);
+  height: 14px;
+  width: 100%;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 260ms ease-out;
+}
