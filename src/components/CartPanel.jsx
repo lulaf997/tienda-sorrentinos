@@ -2,14 +2,21 @@ import { useState } from "react"
 import { useCart } from "../context/CartContext"
 import { formatPrice, buildWhatsAppOrderLink } from "../lib/whatsapp"
 import { logOrderToSheet } from "../lib/logOrder"
-env
+
 export default function CartPanel() {
   const { items, updateQuantity, removeItem, clearCart, total, isOpen, setIsOpen } = useCart()
   const [customerName, setCustomerName] = useState("")
   const [sending, setSending] = useState(false)
+  const [nameError, setNameError] = useState(false)
 
   async function handleCheckout() {
     if (items.length === 0 || sending) return
+
+    if (!customerName.trim()) {
+      setNameError(true)
+      return
+    }
+    setNameError(false)
     setSending(true)
 
     const link = buildWhatsAppOrderLink(items, customerName)
@@ -115,17 +122,29 @@ export default function CartPanel() {
               </div>
 
               <label className="mb-1 block font-mono text-xs uppercase tracking-wide text-[var(--ink)]/60">
-                Tu nombre (opcional)
+                Tu nombre *
               </label>
               <input
                 type="text"
                 value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
+                onChange={(e) => {
+                  setCustomerName(e.target.value)
+                  if (nameError && e.target.value.trim()) setNameError(false)
+                }}
                 placeholder="Ej: Lucía"
-                className="mb-4 w-full rounded-sm border border-[var(--line)] bg-[var(--paper)] px-3 py-2 font-body text-sm outline-none focus-visible:border-[var(--awning)]"
+                aria-invalid={nameError}
+                className={`mb-1 w-full rounded-sm border bg-[var(--paper)] px-3 py-2 font-body text-sm outline-none focus-visible:border-[var(--awning)] ${
+                  nameError ? "border-[var(--stamp)]" : "border-[var(--line)]"
+                }`}
               />
+              {nameError && (
+                <p className="mb-3 font-mono text-xs text-[var(--stamp)]">
+                  Por favor ingresá tu nombre para continuar.
+                </p>
+              )}
+              {!nameError && <div className="mb-3" />}
 
-                            <p className="mb-3 rounded-sm border border-dashed border-[var(--line)] bg-[var(--paper)] px-3 py-2 text-center font-mono text-xs text-[var(--ink)]/70">
+              <p className="mb-3 rounded-sm border border-dashed border-[var(--line)] bg-[var(--paper)] px-3 py-2 text-center font-mono text-xs text-[var(--ink)]/70">
                 ⚠️ Todos los productos son <strong>por encargo</strong>. Coordinamos el día y horario de entrega por WhatsApp.
               </p>
 
@@ -136,6 +155,7 @@ export default function CartPanel() {
               >
                 Enviar pedido por WhatsApp
               </button>
+            </div>
           </div>
         )}
       </aside>
