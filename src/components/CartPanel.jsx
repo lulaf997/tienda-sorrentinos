@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useCart } from "../context/CartContext"
 import { formatPrice, buildWhatsAppOrderLink } from "../lib/whatsapp"
 import { logOrderToSheet } from "../lib/logOrder"
-
+env
 export default function CartPanel() {
   const { items, updateQuantity, removeItem, clearCart, total, isOpen, setIsOpen } = useCart()
   const [customerName, setCustomerName] = useState("")
@@ -125,6 +125,10 @@ export default function CartPanel() {
                 className="mb-4 w-full rounded-sm border border-[var(--line)] bg-[var(--paper)] px-3 py-2 font-body text-sm outline-none focus-visible:border-[var(--awning)]"
               />
 
+                            <p className="mb-3 rounded-sm border border-dashed border-[var(--line)] bg-[var(--paper)] px-3 py-2 text-center font-mono text-xs text-[var(--ink)]/70">
+                ⚠️ Todos los productos son <strong>por encargo</strong>. Coordinamos el día y horario de entrega por WhatsApp.
+              </p>
+
               <button
                 onClick={handleCheckout}
                 disabled={sending}
@@ -132,7 +136,6 @@ export default function CartPanel() {
               >
                 Enviar pedido por WhatsApp
               </button>
-            </div>
           </div>
         )}
       </aside>
