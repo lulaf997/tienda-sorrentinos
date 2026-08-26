@@ -12,8 +12,7 @@ export default function ProductCard({ product }) {
             src={product.imagen}
             alt={product.nombre}
             loading="lazy"
-            className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 ${!product.enStock ? "grayscale opacity-60" : ""
-              }`}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center font-display text-2xl text-[var(--ink)]/30">
@@ -24,12 +23,6 @@ export default function ProductCard({ product }) {
         <span className="stamp-btn absolute right-3 top-3 -rotate-6 rounded-full border-2 border-[var(--stamp)] bg-[var(--paper-light)] px-3 py-1 font-mono text-sm font-semibold text-[var(--stamp)] shadow-[2px_2px_0_var(--stamp)]">
           {formatPrice(product.precio)}
         </span>
-
-        {!product.enStock && (
-          <span className="absolute left-3 top-3 rotate-[-6deg] rounded-sm border-2 border-[var(--ink)] bg-[var(--ink)] px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide text-[var(--paper-light)] shadow-[2px_2px_0_var(--stamp)]">
-            Sin stock
-          </span>
-        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-1 p-4">
@@ -47,10 +40,9 @@ export default function ProductCard({ product }) {
 
         <button
           onClick={() => addItem(product)}
-          disabled={!product.enStock}
-          className="stamp-btn mt-4 w-full rounded-sm border-2 border-[var(--ink)] bg-[var(--awning)] py-2 font-display text-lg tracking-wide text-[var(--paper-light)] shadow-[3px_3px_0_var(--ink)] hover:bg-[var(--awning-dark)] disabled:cursor-not-allowed disabled:border-[var(--ink)]/40 disabled:bg-[var(--ink)]/20 disabled:text-[var(--ink)]/50 disabled:shadow-none"
+          className="stamp-btn mt-4 w-full rounded-sm border-2 border-[var(--ink)] bg-[var(--awning)] py-2 font-display text-lg tracking-wide text-[var(--paper-light)] shadow-[3px_3px_0_var(--ink)] hover:bg-[var(--awning-dark)]"
         >
-          {product.enStock ? "Agregar" : "Sin stock"}
+          Agregar
         </button>
       </div>
     </article>
